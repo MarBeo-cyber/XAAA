@@ -1,0 +1,15 @@
+xaaa:
+  scenario_mode: simulated
+  safety:
+    high_risk_domains_require_expert_review: true
+    no_real_emergency_command: true
+    counterfactuals_are_pedagogical: true
+  memory:
+    max_traces: 100
+    preserve_high_confidence: true
+  feedback:
+    modes:
+      - narrative
+      - counterfactual
+      - socratic
+      - sensory
