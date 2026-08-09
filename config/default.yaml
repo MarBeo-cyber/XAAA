@@ -1,13 +1,34 @@
+# Loaded by xaaa_core/config.py. Every value below is read by code; the
+# "enforced by" notes say exactly where, so the file cannot drift back into
+# decoration.
+#
+# PROVENANCE: the numeric values are author-assigned pedagogical defaults, not
+# measurements or empirically tuned parameters.
 xaaa:
+  # enforced by: config.load_config() raises on any other value, because XAAA
+  # has no non-simulated execution path.
   scenario_mode: simulated
   safety:
+    # enforced by: orchestrator sets ExperienceSessionResult.requires_expert_review
+    # when the consequence is HIGH or CRITICAL.
     high_risk_domains_require_expert_review: true
+    # enforced by: the scenario_mode check above. XAAA emits no commands.
     no_real_emergency_command: true
+    # declarative: a statement of scope, not a runtime check. Counterfactuals are
+    # a comparison of author-assigned risk weights, never evidence of causality.
     counterfactuals_are_pedagogical: true
   memory:
+    # enforced by: ExperienceMemory.max_traces
     max_traces: 100
+    # enforced by: ExperienceMemory.preserve_high_confidence
     preserve_high_confidence: true
+    # enforced by: ExperienceMemory.high_confidence_threshold
+    high_confidence_threshold: 0.70
   feedback:
+    # enforced by: orchestrator emits exactly this list as
+    # ExperienceSessionResult.feedback_modes. Unknown names raise at load time.
+    # Note: "sensory" is delivered only by the pre-scripted HTML storyboard in
+    # web/; the Python engine emits text.
     modes:
       - narrative
       - counterfactual

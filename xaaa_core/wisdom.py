@@ -4,7 +4,17 @@ from .models import Scenario, Consequence, WisdomTrace
 
 
 class WisdomTraceBuilder:
-    """Builds a transferable operational rule from an experience."""
+    """Builds a transferable operational rule from an experience.
+
+    The rule is selected from a fixed per-scenario bank by risk band. There is no
+    generalisation step and no verification that the rule transfers.
+
+    PROVENANCE: the two confidence values (0.72 and 0.66) and the 0.55 band
+    boundary are author-assigned pedagogical constants. They are not derived from
+    data, they do not vary with scenario, option or risk, and they must not be read
+    as a calibrated probability that the rule is correct. They exist to order
+    traces for pruning, nothing more.
+    """
 
     def build(self, scenario: Scenario, consequence: Consequence) -> WisdomTrace:
         if consequence.risk_score >= 0.55:
@@ -22,6 +32,7 @@ class WisdomTraceBuilder:
             operational_rule=rule,
             transfer_domains=self._transfer_domains(scenario),
             confidence=confidence,
+            experience_patterns=list(scenario.experience_patterns),
         )
 
     def _rule_for_scenario(self, scenario_id: str) -> str:

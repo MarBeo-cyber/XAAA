@@ -8,6 +8,13 @@ class ScenarioLibrary:
 
     XAAA does not claim to possess lived experience. It mediates structured
     experience patterns through scenarios, consequences and counterfactuals.
+
+    PROVENANCE: every number and annotation in this library --- the ``hidden_risks``
+    weights and the ``option_violations`` map --- is an author-assigned pedagogical
+    weight chosen to make a teaching point legible. None of it is a measurement, an
+    empirical frequency or a calibrated probability, and none of it is derived from
+    any cited source. Read the risks as an ordering the author asserts, not as an
+    estimate of how often something happens.
     """
 
     def __init__(self) -> None:
@@ -28,7 +35,16 @@ class ScenarioLibrary:
                 },
                 hidden_risks={"A": 0.88, "B": 0.25, "C": 0.65},
                 expected_principles=["avoid_bottleneck", "distributed_flow", "time_critical_action"],
-                experience_patterns=["crowd_convergence_failure", "single_exit_overload", "distributed_routing"]
+                experience_patterns=["crowd_convergence_failure", "single_exit_overload", "distributed_routing"],
+                option_violations={
+                    # A funnels everyone into one exit: it concentrates flow, but it
+                    # does act in time.
+                    "A": ["avoid_bottleneck", "distributed_flow"],
+                    "B": [],
+                    # C neither concentrates nor distributes flow; it forfeits the
+                    # window in which acting was still cheap.
+                    "C": ["time_critical_action"],
+                },
             ),
             "silent_negotiation": Scenario(
                 scenario_id="silent_negotiation",
@@ -45,7 +61,16 @@ class ScenarioLibrary:
                 },
                 hidden_risks={"A": 0.70, "B": 0.18, "C": 0.82},
                 expected_principles=["avoid_projection", "respect_processing_time", "explicit_bridge"],
-                experience_patterns=["silence_as_processing", "premature_concession", "schema_projection"]
+                experience_patterns=["silence_as_processing", "premature_concession", "schema_projection"],
+                option_violations={
+                    # A reads the silence as refusal and concedes before the other
+                    # party has finished processing.
+                    "A": ["avoid_projection", "respect_processing_time"],
+                    "B": [],
+                    # C reads the same silence as assent and never builds the
+                    # explicit bridge that would have tested the reading.
+                    "C": ["avoid_projection", "explicit_bridge"],
+                },
             ),
             "project_contract_gap": Scenario(
                 scenario_id="project_contract_gap",
@@ -62,7 +87,16 @@ class ScenarioLibrary:
                 },
                 hidden_risks={"A": 0.76, "B": 0.22, "C": 0.58},
                 expected_principles=["operationalize_ambiguity", "define_evidence", "prevent_schema_gap"],
-                experience_patterns=["legal_operational_misalignment", "ambiguous_standard", "contract_execution_gap"]
+                experience_patterns=["legal_operational_misalignment", "ambiguous_standard", "contract_execution_gap"],
+                option_violations={
+                    # A leaves the abstract standard in place and adds no evidence
+                    # criteria at all.
+                    "A": ["operationalize_ambiguity", "define_evidence"],
+                    "B": [],
+                    # C swaps one unmeasurable standard for another, unilaterally:
+                    # the two teams' schemas are never reconciled.
+                    "C": ["prevent_schema_gap", "define_evidence"],
+                },
             ),
         }
 

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xaaa-core"
+version = "1.0.0"
+description = "XAAA - a deterministic, rule-based experiential scenario and reflection engine"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [{ name = "Marco Giuseppe Beozzi" }]
+dependencies = [
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[tool.setuptools]
+packages = ["xaaa_core"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

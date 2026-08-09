@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .models import Scenario, Consequence, SocraticPrompt
+from .models import Scenario, Consequence, SocraticPrompt, UserDecision
 
 
 class SocraticReflectionEngine:
@@ -8,9 +8,19 @@ class SocraticReflectionEngine:
 
     The engine does not lecture. It helps the user discover the experiential
     pattern behind the consequence.
+
+    The questions are drawn from a fixed bank keyed on principle name, plus one
+    prompt that reflects the user's own stated rationale back at them. The engine
+    does not interpret the rationale text; it quotes it, which is the whole point
+    of a maieutic question.
     """
 
-    def generate(self, scenario: Scenario, consequence: Consequence) -> list[SocraticPrompt]:
+    def generate(
+        self,
+        scenario: Scenario,
+        consequence: Consequence,
+        decision: UserDecision | None = None,
+    ) -> list[SocraticPrompt]:
         prompts = []
 
         if consequence.counterfactual_best_option:
@@ -35,6 +45,18 @@ class SocraticReflectionEngine:
                 question="Quale principio potresti riutilizzare in un dominio diverso?",
                 target_pattern="transfer",
                 purpose="Support transfer learning."
+            ))
+
+        rationale = (decision.rationale or "").strip() if decision else ""
+        if rationale:
+            prompts.append(SocraticPrompt(
+                question=(
+                    f"Hai motivato la scelta così: «{rationale}». "
+                    "Quale parte di questa motivazione era un'osservazione verificata "
+                    "e quale era un'assunzione che non avevi ancora testato?"
+                ),
+                target_pattern="rationale_review",
+                purpose="Return the user's own stated reasoning for examination.",
             ))
 
         return prompts

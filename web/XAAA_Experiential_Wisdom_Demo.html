@@ -50,10 +50,22 @@ h1{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)
 button{border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.05);color:var(--text);font-weight:850;padding:10px 14px;cursor:pointer}
 button:hover{background:rgba(255,255,255,.1)}
 button.primary{color:var(--blue);border-color:rgba(74,184,255,.35)}
+.storyboard-notice{max-width:1180px;margin:0 auto 14px;padding:12px 16px;border:1px solid rgba(255,196,74,.45);border-left:4px solid #ffc44a;border-radius:10px;background:rgba(255,196,74,.08);font-size:13px;line-height:1.5}
+.storyboard-notice b{color:#ffc44a}
+.storyboard-notice code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
 <h1>XAAA - eXperiential Autopoietic Adaptive Agent</h1>
+<div class="storyboard-notice">
+  <b>Storyboard pre-scritto — non è l'output del motore.</b>
+  Questa pagina è un'animazione scritta a mano: valori, testi e tempi sono
+  codificati nell'HTML. Non chiama <code>xaaa_core/</code>, non esegue alcuna
+  richiesta di rete e non dimostra il funzionamento del motore. Illustra
+  l'intenzione sensoriale del ciclo XAAA. I numeri mostrati corrispondono allo
+  scenario <code>evacuation_bottleneck</code>, opzione A, come lo valuta il codice
+  Python; per l'output reale eseguire <code>python examples/run_demo.py</code>.
+</div>
 <div class="frame">
 <div class="header"><span>Dal sapere alla saggezza operativa</span><span id="mode">scenario</span></div>
 <div class="main">
@@ -80,7 +92,7 @@ button.primary{color:var(--blue);border-color:rgba(74,184,255,.35)}
 </div>
 <script>
 function reset(){document.getElementById('mode').textContent='scenario';document.getElementById('step').textContent='1 - scenario';document.getElementById('crowd').classList.remove('on');document.getElementById('flow').classList.remove('on');document.getElementById('arrow').classList.remove('on');document.getElementById('wisdom').classList.remove('on');document.getElementById('fill').style.width='0%';document.getElementById('decision').textContent='—';document.getElementById('risk').textContent='—';document.getElementById('action').textContent='osserva';}
-function runBad(){document.getElementById('mode').textContent='consequence';document.getElementById('step').textContent='2 - conseguenza';document.getElementById('crowd').classList.add('on');document.getElementById('fill').style.width='88%';document.getElementById('decision').textContent='A';document.getElementById('risk').textContent='HIGH 0.88';document.getElementById('action').textContent='consequence simulation';}
+function runBad(){document.getElementById('mode').textContent='consequence';document.getElementById('step').textContent='2 - conseguenza';document.getElementById('crowd').classList.add('on');document.getElementById('fill').style.width='88%';document.getElementById('decision').textContent='A';document.getElementById('risk').textContent='CRITICAL 0.88';document.getElementById('action').textContent='consequence simulation';}
 function runCounter(){runBad();setTimeout(()=>{document.getElementById('mode').textContent='counterfactual';document.getElementById('step').textContent='3 - controfattuale';document.getElementById('flow').classList.add('on');document.getElementById('arrow').classList.add('on');document.getElementById('action').textContent='compare A vs B';document.getElementById('prompt').textContent='Che cosa rendeva B meno rischiosa di A, anche se era più lontana?';},450)}
 function runWisdom(){runCounter();setTimeout(()=>{document.getElementById('mode').textContent='wisdom';document.getElementById('step').textContent='4 - sapienza operativa';document.getElementById('wisdom').classList.add('on');document.getElementById('action').textContent='wisdom trace';},950)}
 reset()

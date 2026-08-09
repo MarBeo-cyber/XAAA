@@ -1,1 +1,5 @@
+# Runtime dependency: config/default.yaml is loaded at start-up by xaaa_core/config.py.
+PyYAML>=6.0
+
+# Tests
 pytest>=8.0

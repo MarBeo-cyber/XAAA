@@ -30,7 +30,6 @@ class FeedbackMode(str, Enum):
     NARRATIVE = "narrative"
     SOCRATIC = "socratic"
     COUNTERFACTUAL = "counterfactual"
-    SIMULATION = "simulation"
     SENSORY = "sensory"
 
 
@@ -44,6 +43,10 @@ class Scenario:
     hidden_risks: Dict[str, float]
     expected_principles: List[str]
     experience_patterns: List[str] = field(default_factory=list)
+    #: Per-option map of which ``expected_principles`` that option actually
+    #: violates. Author-assigned pedagogical annotation, not an inference: the
+    #: engine performs no analysis of the option text.
+    option_violations: Dict[str, List[str]] = field(default_factory=dict)
 
 
 @dataclass
@@ -81,6 +84,8 @@ class WisdomTrace:
     transfer_domains: List[str] = field(default_factory=list)
     confidence: float = 0.0
     created_at: str = field(default_factory=utc_now)
+    #: Experience-pattern names the originating scenario mediates.
+    experience_patterns: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -91,3 +96,9 @@ class ExperienceSessionResult:
     prompts: List[SocraticPrompt]
     wisdom_trace: WisdomTrace
     feedback_modes: List[FeedbackMode]
+    #: Prior traces in Experience Memory that share a transfer domain with this
+    #: session's trace (L6 retrieval).
+    transfer_candidates: List[WisdomTrace] = field(default_factory=list)
+    #: Set when config safety.high_risk_domains_require_expert_review is on and
+    #: the consequence lands in a HIGH or CRITICAL band.
+    requires_expert_review: bool = False
